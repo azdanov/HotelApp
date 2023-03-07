@@ -10,7 +10,7 @@ namespace HotelAppLibrary.Data;
 public class SqlDataLayer
 {
     private const string ConnectionStringName = "SqlDb";
-    private readonly SqlDataAccess _db;
+    private readonly ISqlDataAccess _db;
 
     public SqlDataLayer(IConfiguration config)
     {
@@ -23,7 +23,7 @@ public class SqlDataLayer
             "dbo.spRoomTypes_GetAvailable",
             new { checkInDate, checkOutDate },
             ConnectionStringName,
-            new DataAccessOptions(true)
+            new DataAccessOptions(IsStoredProcedure: true)
         );
     }
 
@@ -34,14 +34,13 @@ public class SqlDataLayer
             "dbo.spGuests_Insert",
             new { firstName, lastName },
             ConnectionStringName,
-            new DataAccessOptions(true)
+            new DataAccessOptions(IsStoredProcedure: true)
         ).First();
 
         RoomTypeModel roomType = _db.LoadData<RoomTypeModel, dynamic>(
             "SELECT Id, Title, Description, Price FROM dbo.RoomTypes WHERE Id = @roomTypeId",
             new { roomTypeId },
-            ConnectionStringName,
-            new DataAccessOptions(false)
+            ConnectionStringName
         ).First();
 
         TimeSpan stayLength = checkOutDate.Date.Subtract(checkInDate.Date);
@@ -50,7 +49,7 @@ public class SqlDataLayer
             "dbo.spRooms_GetAvailable",
             new { checkInDate, checkOutDate, roomTypeId },
             ConnectionStringName,
-            new DataAccessOptions(true)
+            new DataAccessOptions(IsStoredProcedure: true)
         );
 
         _db.SaveData(
@@ -64,7 +63,7 @@ public class SqlDataLayer
                 totalCost = roomType.Price * stayLength.Days
             },
             ConnectionStringName,
-            new DataAccessOptions(true)
+            new DataAccessOptions(IsStoredProcedure: true)
         );
     }
 }

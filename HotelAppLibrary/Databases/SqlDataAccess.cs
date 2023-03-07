@@ -16,7 +16,7 @@ public class SqlDataAccess : ISqlDataAccess
         _config = config;
     }
 
-    public List<T> LoadData<T, TU>(string sql, TU parameters, string connectionStringName, DataAccessOptions? options)
+    public List<T> LoadData<T, TU>(string sql, TU parameters, string connectionStringName, DataAccessOptions? options = null)
     {
         var connectionString = _config.GetConnectionString(connectionStringName);
         using var connection = new SqlConnection(connectionString);
@@ -25,7 +25,7 @@ public class SqlDataAccess : ISqlDataAccess
         return connection.Query<T>(sql, parameters, commandType: commandType).ToList();
     }
 
-    public void SaveData<T>(string sql, T parameters, string connectionStringName, DataAccessOptions? options)
+    public void SaveData<T>(string sql, T parameters, string connectionStringName, DataAccessOptions? options = null)
     {
         var connectionString = _config.GetConnectionString(connectionStringName);
         using var connection = new SqlConnection(connectionString);
