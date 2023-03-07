@@ -1,4 +1,3 @@
-﻿namespace HotelAppLibrary.Models
-{
-    public record RoomModel(int Id, RoomTypeModel RoomTypeModel, string RoomNumber);
-}
+﻿namespace HotelAppLibrary.Models;
+
+public record RoomModel(int Id, int RoomTypeId, string RoomNumber);
