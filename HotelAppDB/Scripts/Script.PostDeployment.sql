@@ -13,9 +13,12 @@ if not exists (select 1 from [dbo].[RoomTypes])
 begin
     insert into [dbo].[RoomTypes] ([Title], [Description], [Price])
     values 
-        ('Single', 'A room with a single bed and a window.', 100),
-        ('Double', 'A room with two beds and a window.', 200),
-        ('King', 'A room with a king size bed and a window.', 300);
+        ('Queen', 'A room with a queen-sized bed and a window.', 100),
+        ('King', 'A room with a king size bed and a window.', 200),
+        ('Twin', 'A room with two twin-sized beds and a window.', 300),
+        ('Hollywood twin', 'A room with two twin beds that are joined by the same headboard and a window.', 400),
+        ('Double-double', 'A room with two double beds and are meant to accommodate two to four people, especially families traveling with young kids.', 400),
+        ('Studio', 'A fully-furnished apartment with a small kitchenette.', 500);
 end
 
 if not exists (select 1 from [dbo].[Rooms])
@@ -23,10 +26,17 @@ begin
     declare @roomId1 int;
     declare @roomId2 int;
     declare @roomId3 int;
+    declare @roomId4 int;
+    declare @roomId5 int;
+    declare @roomId6 int;
 
-    select @roomId1 = [Id] from [dbo].[RoomTypes] where [Title] = 'Single';
-    select @roomId2 = [Id] from [dbo].[RoomTypes] where [Title] = 'Double';
-    select @roomId3 = [Id] from [dbo].[RoomTypes] where [Title] = 'King';
+
+    select @roomId1 = [Id] from [dbo].[RoomTypes] where [Title] = 'Queen';
+    select @roomId2 = [Id] from [dbo].[RoomTypes] where [Title] = 'King';
+    select @roomId3 = [Id] from [dbo].[RoomTypes] where [Title] = 'Twin';
+    select @roomId4 = [Id] from [dbo].[RoomTypes] where [Title] = 'Hollywood twin';
+    select @roomId5 = [Id] from [dbo].[RoomTypes] where [Title] = 'Double-double';
+    select @roomId6 = [Id] from [dbo].[RoomTypes] where [Title] = 'Studio';
 
 	insert into [dbo].[Rooms] ([RoomTypeId], [RoomNumber])
     values
@@ -35,5 +45,16 @@ begin
         (@roomId1, '103'),
 	    (@roomId2, '201'),
         (@roomId2, '202'),
-	    (@roomId3, '301');
+	    (@roomId3, '301'),
+        (@roomId3, '302'),
+		(@roomId3, '303'),
+		(@roomId4, '401'),
+		(@roomId4, '402'),
+		(@roomId4, '403'),
+		(@roomId5, '501'),
+		(@roomId5, '502'),
+		(@roomId5, '503'),
+		(@roomId6, '601'),
+		(@roomId6, '602'),
+		(@roomId6, '603');
 end

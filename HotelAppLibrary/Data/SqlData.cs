@@ -9,7 +9,7 @@ namespace HotelAppLibrary.Data;
 
 public class SqlData : IDatabaseData
 {
-    private const string ConnectionStringName = "SqlDb";
+    private const string ConnectionStringName = "DefaultConnection";
     private readonly ISqlDataAccess _db;
 
     public SqlData(IConfiguration config)
