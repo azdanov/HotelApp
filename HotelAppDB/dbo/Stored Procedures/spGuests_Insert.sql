@@ -1,6 +1,7 @@
-﻿CREATE PROCEDURE dbo.spGuests_Insert @firstName VARCHAR(50),
-                                     @lastName VARCHAR(50)
-AS
+﻿CREATE PROCEDURE dbo.spGuests_Insert(
+    @firstName VARCHAR(50),
+    @lastName VARCHAR(50)
+) AS
 BEGIN
     SET XACT_ABORT, NOCOUNT ON;
 

@@ -1,9 +1,10 @@
-﻿CREATE PROCEDURE dbo.spBookings_Insert @roomId INT,
-                                       @guestId INT,
-                                       @checkInDate DATETIME,
-                                       @checkOutDate DATETIME,
-                                       @totalPrice MONEY
-AS
+﻿CREATE PROCEDURE dbo.spBookings_Insert(
+    @roomId INT,
+    @guestId INT,
+    @checkInDate DATETIME,
+    @checkOutDate DATETIME,
+    @totalPrice MONEY
+) AS
 BEGIN
     SET XACT_ABORT, NOCOUNT ON;
 

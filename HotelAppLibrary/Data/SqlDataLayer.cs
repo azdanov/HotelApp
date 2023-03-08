@@ -66,4 +66,14 @@ public class SqlDataLayer
             new DataAccessOptions(IsStoredProcedure: true)
         );
     }
+
+    public List<BookingFullModel> SearchBookings(string lastName)
+    {
+        return _db.LoadData<BookingFullModel, dynamic>(
+            "dbo.spBookings_Search",
+            new { lastName, checkInDate = DateTime.Now },
+            ConnectionStringName,
+            new DataAccessOptions(IsStoredProcedure: true)
+        );
+    }
 }

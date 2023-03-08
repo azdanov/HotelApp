@@ -1,7 +1,8 @@
-﻿CREATE PROCEDURE dbo.spRooms_GetAvailable @checkInDate DATETIME2,
-                                          @checkOutDate DATETIME2,
-                                          @roomTypeId INT
-AS
+﻿CREATE PROCEDURE dbo.spRooms_GetAvailable(
+    @checkInDate DATETIME2,
+    @checkOutDate DATETIME2,
+    @roomTypeId INT
+) AS
 BEGIN
     SET XACT_ABORT, NOCOUNT ON;
 
