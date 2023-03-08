@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace HotelAppLibrary.Data;
 
-public class SqlDataLayer
+public class SqlData : IDatabaseData
 {
     private const string ConnectionStringName = "SqlDb";
     private readonly ISqlDataAccess _db;
 
-    public SqlDataLayer(IConfiguration config)
+    public SqlData(IConfiguration config)
     {
         _db = new SqlDataAccess(config);
     }
@@ -72,6 +72,16 @@ public class SqlDataLayer
         return _db.LoadData<BookingFullModel, dynamic>(
             "dbo.spBookings_Search",
             new { lastName, checkInDate = DateTime.Now },
+            ConnectionStringName,
+            new DataAccessOptions(IsStoredProcedure: true)
+        );
+    }
+
+    public void CheckInGuest(int bookingId)
+    {
+        _db.SaveData(
+            "dbo.spBookings_CheckIn",
+            new { bookingId },
             ConnectionStringName,
             new DataAccessOptions(IsStoredProcedure: true)
         );
