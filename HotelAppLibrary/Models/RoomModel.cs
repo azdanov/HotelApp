@@ -1,3 +1,3 @@
 ﻿namespace HotelAppLibrary.Models;
 
-public record RoomModel(int Id, int RoomTypeId, string RoomNumber);
+public record RoomModel(int Id, string RoomNumber, int RoomTypeId);

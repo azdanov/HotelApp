@@ -11,7 +11,6 @@ namespace HotelApp.Web.Pages
     public class RoomSearchModel : PageModel
     {
         private readonly IDatabaseData _db;
-        public readonly CultureInfo Culture = new("et-EE");
 
         [DisplayName("Check-in date")]
         [BindProperty(SupportsGet = true)]
@@ -23,7 +22,8 @@ namespace HotelApp.Web.Pages
         [DataType(DataType.Date)]
         public DateTime CheckOutDate { get; set; } = DateTime.Now.AddDays(1);
 
-        [BindProperty(SupportsGet = true)] public bool IsSearchEnabled { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public bool IsSearchEnabled { get; set; } = false;
 
         public List<RoomTypeModel>? AvailableRoomTypes { get; set; }
 

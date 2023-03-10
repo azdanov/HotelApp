@@ -43,7 +43,7 @@ public class SqlData : IDatabaseData
             ConnectionStringName
         ).First();
 
-        TimeSpan stayLength = checkOutDate.Date.Subtract(checkInDate.Date);
+        TimeSpan stayLength = checkOutDate - checkInDate;
 
         List<RoomModel> availableRooms = _db.LoadData<RoomModel, dynamic>(
             "dbo.spRooms_GetAvailable",
@@ -60,7 +60,7 @@ public class SqlData : IDatabaseData
                 guestId = guest.Id,
                 checkInDate,
                 checkOutDate,
-                totalCost = roomType.Price * stayLength.Days
+                totalPrice = roomType.Price * stayLength.Days
             },
             ConnectionStringName,
             new DataAccessOptions(IsStoredProcedure: true)
@@ -85,5 +85,15 @@ public class SqlData : IDatabaseData
             ConnectionStringName,
             new DataAccessOptions(IsStoredProcedure: true)
         );
+    }
+
+    public RoomTypeModel? GetRoomTypeById(int roomTypeId)
+    {
+        return _db.LoadData<RoomTypeModel, dynamic>(
+            "dbo.spRoomTypes_GetById",
+            new { roomTypeId },
+            ConnectionStringName,
+            new DataAccessOptions(IsStoredProcedure: true)
+        ).FirstOrDefault();
     }
 }

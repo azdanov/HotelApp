@@ -1,0 +1,44 @@
+﻿@page
+@using Microsoft.AspNetCore.Localization
+@model HotelApp.Web.Pages.BookRoomModel
+@{
+    ViewData["Title"] = "Book A Room";
+    var requestCultureFeature = HttpContext.Features.Get<IRequestCultureFeature>()!;
+    var requestCulture = requestCultureFeature.RequestCulture;
+}
+
+<h1 class="mb-4">Book A Room</h1>
+
+@if (@Model.RoomType == null)
+{
+    <p>Error: Room with ID @Model.RoomTypeId was not found.</p>
+}
+else
+{
+    <section class="mb-4">
+        <h2 class="h3">@Model.RoomType.Title</h2>
+        <p>@Model.RoomType.Description</p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h3">Dates</h2>
+        <p>
+            @Model.CheckInDate.ToString("d", requestCulture.UICulture) -
+            @Model.CheckOutDate.ToString("d", requestCulture.UICulture)
+        </p>
+    </section>
+
+    <form method="post" class="mb-5">
+        <div class="row">
+            <div class="mb-3 col">
+                <label asp-for="@Model.FirstName"></label>
+                <input asp-for="@Model.FirstName" class="form-control"/>
+            </div>
+            <div class="mb-3 col">
+                <label asp-for="@Model.LastName"></label>
+                <input asp-for="@Model.LastName" class="form-control"/>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Book</button>
+    </form>
+}
