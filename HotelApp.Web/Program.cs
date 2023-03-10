@@ -1,5 +1,8 @@
+﻿using System.Globalization;
 using HotelAppLibrary.Data;
 using HotelAppLibrary.Databases;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IDatabaseData, SqlData>();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+        new CultureInfo("et-EE"),
+        new CultureInfo("en")
+        {
+            NumberFormat =
+            {
+                CurrencySymbol = "$"
+            }
+        },
+        new CultureInfo("en-US")
+    };
+    options.DefaultRequestCulture = new RequestCulture("et-EE");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
 
 var app = builder.Build();
 
@@ -18,18 +40,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-var supportedCultures = new[] { "et-EE", "en-US" };
-var localizationOptions = new RequestLocalizationOptions()
-    .SetDefaultCulture(supportedCultures[0])
-    .AddSupportedCultures(supportedCultures)
-    .AddSupportedUICultures(supportedCultures);
-
-app.UseRequestLocalization(localizationOptions);
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+var localizationOptions = ((IApplicationBuilder)app).ApplicationServices
+    .GetService<IOptions<RequestLocalizationOptions>>()!.Value;
+app.UseRequestLocalization(localizationOptions);
 
 app.UseAuthorization();
 

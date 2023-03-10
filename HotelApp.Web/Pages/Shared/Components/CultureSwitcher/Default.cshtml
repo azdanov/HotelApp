@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelApp.Web.Localization.Models.CultureSwitcherModel
+
+<div>
+    @if (Model.SupportedCultures?.Count > 0)
+    {
+        <form id="culture-switcher">
+            <select name="culture" id="culture-options" class="form-select">
+                <option></option>
+                @foreach (var culture in Model.SupportedCultures)
+                {
+                    <option value="@culture.Name" selected="@(Model.CurrentUiCulture?.Name == culture.Name)">@culture.DisplayName</option>
+                }
+            </select>
+        </form>
+    }
+    else
+    {
+        <p>Empty</p>
+    }
+</div>
+
+<script>
+    document
+        .getElementById("culture-options")
+        .addEventListener("change", () => document.getElementById("culture-switcher").submit());
+</script>

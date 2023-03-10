@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Localization\Models\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
   </ItemGroup>
 
